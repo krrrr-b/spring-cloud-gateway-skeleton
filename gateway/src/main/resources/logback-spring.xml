@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="profile" source="spring.profiles.active"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/application.${running.port:-default}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/application.${running.port:-default}.log.%i.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxFileSize>500MB</maxFileSize>
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%-5level:%X{REQUEST_CUSTOM_ID}] [${HOSTNAME}:%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%logger{5}:%method:%L] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="jsonAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/json_${port:-default}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/json_${port:-default}.log.%i.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>180</maxHistory>
+            <maxFileSize>500MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%-5level:%X{REQUEST_CUSTOM_ID}] [${HOSTNAME}:%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%logger{5}:%method:%L] %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="reactor.netty" level="INFO"/>
+    <logger name="springfox.documentation" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.apache.kafka.clients" level="INFO"/>
+    <logger name="com.zaxxer.hikari" level="DEBUG"/>
+    <logger name="org.hibernate.engine.internal" level="ERROR"/>
+    <logger name="io.lettuce.core" level="INFO"/>
+    <logger name="org.springframework.boot.autoconfigure.logging" level="INFO"/>
+    <logger name="io.netty.handler.ssl.SslHandler" level="INFO"/>
+
+    <springProfile name="beta, production">
+        <root level="INFO">
+            <appender-ref ref="consoleAppender"/>
+            <appender-ref ref="fileAppender"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev, sandbox">
+        <root level="DEBUG">
+            <appender-ref ref="consoleAppender"/>
+            <appender-ref ref="fileAppender"/>
+            <appender-ref ref="jsonAppender"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <root level="INFO">
+            <appender-ref ref="consoleAppender"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="default">
+        <root level="DEBUG">
+            <appender-ref ref="consoleAppender"/>
+        </root>
+    </springProfile>
+</configuration>

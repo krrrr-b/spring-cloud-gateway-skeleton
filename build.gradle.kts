@@ -90,10 +90,6 @@ subprojects {
         implementation("org.apache.commons:commons-lang3")
         implementation("org.apache.commons:commons-pool2")
         compileOnly("commons-io:commons-io:$commonIoVersion")
-
-        implementation("org.codehaus.janino:janino:$janinoVersion")
-        implementation("ch.qos.logback:logback-classic:$logbackVersion")
-        implementation("ch.qos.logback:logback-core:$logbackVersion")
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

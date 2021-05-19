@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.skeleton.webflux.common.environment.YmlFileLoaderProcessor
+  com.skeleton.gateway.common.environment.YmlFileLoaderProcessor

@@ -1,18 +1,13 @@
-rootProject.name = "spring-webflux-skeleton"
+rootProject.name = "spring-cloud-gateway-skeleton"
 
 include(
     ":core:common",
     ":core:common-api",
 
     ":data:common",
-    ":data:data-mongo",
     ":data:data-redis",
 
-    ":client:common",
-    ":client:unknown1-client",
-    ":client:unknown2-client",
-
-    "internal-api"
+    "gateway"
 )
 
 pluginManagement {

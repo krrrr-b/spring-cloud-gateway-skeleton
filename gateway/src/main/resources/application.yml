@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: default
+
+limiter:
+  replenish_rate: 3000
+  burst_capacity: 3000
