@@ -8,3 +8,6 @@ spring:
 limiter:
   replenish_rate: 3000
   burst_capacity: 3000
+
+internal:
+  host: http://localhost:8090

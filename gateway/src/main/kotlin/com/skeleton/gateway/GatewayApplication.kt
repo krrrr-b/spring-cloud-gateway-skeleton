@@ -1,6 +1,6 @@
 package com.skeleton.gateway
 
-import com.skeleton.gateway.configuration.RedisRateLimiterConfiguration
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.gateway.filter.factory.RequestRateLimiterGatewayFilterFactory
@@ -13,12 +13,13 @@ import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 
 @SpringBootApplication(scanBasePackages = ["com.skeleton.gateway"])
-class GatewayApplication {
-    private lateinit var redisRateLimiterConfiguration: RedisRateLimiterConfiguration
-    private lateinit var ipKeyResolver: KeyResolver
+class GatewayApplication(
+    private val redisRateLimiterConfiguration: RedisRateLimiterConfiguration,
+    private val ipKeyResolver: KeyResolver,
 
-    private val host: String = "http://localhost:8090"
-
+    @Value("\${internal.host}")
+    private val host: String
+) {
     @Bean
     fun routes(builder: RouteLocatorBuilder): RouteLocator {
         return builder.routes()

@@ -11,6 +11,7 @@ tasks.getByName<Jar>("jar") {
 dependencies {
     api(project(":data:common"))
     api(project(":data:data-redis"))
+    api(project(":core:common"))
     api(project(":core:common-api"))
 
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
